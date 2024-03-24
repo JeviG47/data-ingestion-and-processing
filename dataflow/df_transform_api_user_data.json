@@ -33,13 +33,7 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          name as string,",
-				"          email as string,",
-				"          signup_date as string,",
-				"          interests as string[]",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine',",

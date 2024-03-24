@@ -18,26 +18,7 @@
 				"fileSystem": "raw"
 			}
 		},
-		"schema": {
-			"type": "object",
-			"properties": {
-				"name": {
-					"type": "string"
-				},
-				"email": {
-					"type": "string"
-				},
-				"signup_date": {
-					"type": "string"
-				},
-				"interests": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				}
-			}
-		}
+		"schema": {}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
 }
