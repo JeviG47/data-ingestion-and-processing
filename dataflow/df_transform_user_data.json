@@ -30,36 +30,52 @@
 					"name": "Name"
 				},
 				{
-					"name": "Select"
-				},
-				{
 					"name": "split1"
 				},
 				{
 					"name": "DateTransformation"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          name as string,",
+				"          email as string,",
+				"          signup_date as string,",
+				"          interests as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     partitionBy('hash', 1)) ~> FirstNameSource",
 				"FirstNameSource derive(first_name = split(name, ' ')[1],",
 				"          last_name = split(name, ' ')[2]) ~> Name",
-				"DateTransformation select(mapColumn(",
-				"          first_name,",
-				"          last_name,",
-				"          email,",
-				"          signup_date = Year,",
-				"          interests",
-				"     ),",
-				"     partitionBy('hash', 1),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> Select",
 				"Name split(regexMatch(email,`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`),",
 				"     disjoint: false) ~> split1@(validEmail, InvalidEmail)",
-				"split1@validEmail derive(Year = month(signup_date)) ~> DateTransformation",
-				"Select sink(allowSchemaDrift: true,",
+				"derivedColumn1 derive(signup_month = month(signup_date)) ~> DateTransformation",
+				"split1@validEmail derive(signup_date = toDate(signup_date, 'dd-MM-yyyy')) ~> derivedColumn1",
+				"DateTransformation derive(signup_year = year(signup_date)) ~> derivedColumn2",
+				"derivedColumn2 select(mapColumn(",
+				"          name,",
+				"          email,",
+				"          signup_date,",
+				"          interests,",
+				"          first_name,",
+				"          last_name,",
+				"          signup_month,",
+				"          signup_year",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['processed_user_data'],",
 				"     umask: 0022,",
