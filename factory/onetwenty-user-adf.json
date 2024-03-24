@@ -1,0 +1,9 @@
+{
+	"name": "onetwenty-user-adf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "154d5917-38d5-4fa0-8d92-b3f797b5bd18",
+		"tenantId": "a5fe41e6-e254-4cb3-9733-8fe2524d03c0"
+	}
+}

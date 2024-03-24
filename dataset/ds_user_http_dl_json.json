@@ -1,0 +1,24 @@
+{
+	"name": "ds_user_http_dl_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_onetwentyuserdl",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "raw"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "user_data",
+				"folderPath": "api",
+				"fileSystem": "raw"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,76 @@
+{
+	"name": "pl_ingest_user_data_api",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy User Data",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_user_http_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeURL": {
+								"value": "@pipeline().parameters.sourceRelativeURL",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_user_http_dl_json",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"sourceRelativeURL": {
+				"type": "string",
+				"defaultValue": "api/dummy-data-api?code=gIT9c1hNoycFEXaK3vNXAUAUJ5aTFXPunD4jwS5_aJfgAzFuI-8Qmg=="
+			},
+			"sinkFileName": {
+				"type": "string",
+				"defaultValue": "user_data"
+			}
+		},
+		"folder": {
+			"name": "Ingest"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-03-24T20:10:56Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

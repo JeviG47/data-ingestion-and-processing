@@ -1,0 +1,31 @@
+{
+	"name": "ds_user_http_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_http_onetwentyuser",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"relativeURL": {
+				"type": "string",
+				"defaultValue": "api/dummy-data-api?code=gIT9c1hNoycFEXaK3vNXAUAUJ5aTFXPunD4jwS5_aJfgAzFuI-8Qmg=="
+			}
+		},
+		"folder": {
+			"name": "raw"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().relativeURL",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

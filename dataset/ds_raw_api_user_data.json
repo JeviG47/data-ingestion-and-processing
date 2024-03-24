@@ -1,0 +1,43 @@
+{
+	"name": "ds_raw_api_user_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_onetwentyuserdl",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "raw"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "user_data",
+				"folderPath": "api",
+				"fileSystem": "raw"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"signup_date": {
+					"type": "string"
+				},
+				"interests": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

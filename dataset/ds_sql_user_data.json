@@ -1,0 +1,42 @@
+{
+	"name": "ds_sql_user_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_user_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "signup_date",
+				"type": "date"
+			},
+			{
+				"name": "interests",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Users"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
