@@ -1,12 +1,12 @@
 {
-	"name": "df_transform_user_data_copy1",
+	"name": "df_transform_api_user_data",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_raw_user_data",
+						"referenceName": "ds_raw_api_user_data",
 						"type": "DatasetReference"
 					},
 					"name": "FirstNameSource"
@@ -15,14 +15,10 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ds_processed_user_data",
+						"referenceName": "ds_processed_api_user_data",
 						"type": "DatasetReference"
 					},
-					"name": "UserSink",
-					"rejectedDataLinkedService": {
-						"referenceName": "ls_adls_onetwentyuserdl",
-						"type": "LinkedServiceReference"
-					}
+					"name": "Sink"
 				}
 			],
 			"transformations": [
@@ -36,55 +32,54 @@
 					"name": "DateTransformation"
 				},
 				{
-					"name": "derivedColumn1"
-				},
-				{
-					"name": "derivedColumn2"
+					"name": "Year"
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "IntereststoString"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          name as string,",
 				"          email as string,",
-				"          signup_date as string,",
-				"          interests as string",
+				"          interests as string[],",
+				"          name as string,",
+				"          signup_date as date",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine',",
 				"     partitionBy('hash', 1)) ~> FirstNameSource",
-				"FirstNameSource derive(first_name = split(name, ' ')[1],",
+				"IntereststoString derive(first_name = split(name, ' ')[1],",
 				"          last_name = split(name, ' ')[2]) ~> Name",
 				"Name split(regexMatch(email,`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`),",
 				"     disjoint: false) ~> split1@(validEmail, InvalidEmail)",
-				"derivedColumn1 derive(signup_month = month(signup_date)) ~> DateTransformation",
-				"split1@validEmail derive(signup_date = toDate(signup_date, 'dd-MM-yyyy')) ~> derivedColumn1",
-				"DateTransformation derive(signup_year = year(signup_date)) ~> derivedColumn2",
-				"derivedColumn2 select(mapColumn(",
-				"          name,",
-				"          email,",
-				"          signup_date,",
-				"          interests,",
+				"split1@validEmail derive(signup_month = month(signup_date)) ~> DateTransformation",
+				"DateTransformation derive(signup_year = year(signup_date)) ~> Year",
+				"Year select(mapColumn(",
 				"          first_name,",
 				"          last_name,",
+				"          email,",
+				"          signup_date,",
 				"          signup_month,",
-				"          signup_year",
+				"          signup_year,",
+				"          interests",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
+				"FirstNameSource derive(interests = replace(replace(replace(toString(interests), '[', ''), ']', ''), '\"', '')) ~> IntereststoString",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['processed_user_data'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
-				"     dateFormat:'dd/MM/yyyy',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> UserSink"
+				"     partitionBy('hash', 1)) ~> Sink"
 			]
 		}
 	}
