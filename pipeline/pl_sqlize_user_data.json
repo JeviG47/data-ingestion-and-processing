@@ -32,7 +32,10 @@
 						"preCopyScript": "TRUNCATE TABLE Users",
 						"writeBehavior": "upsert",
 						"upsertSettings": {
-							"useTempDB": true
+							"useTempDB": true,
+							"keys": [
+								"email"
+							]
 						},
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
