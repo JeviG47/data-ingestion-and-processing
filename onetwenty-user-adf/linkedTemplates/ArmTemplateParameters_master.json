@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "onetwenty-user-adf"
+		},
+		"ls_ablob_onetwentyusersa_connectionString": {
+			"value": ""
+		},
+		"ls_adls_onetwentyuserdl_accountKey": {
+			"value": ""
+		},
+		"ls_sql_user_db_connectionString": {
+			"value": ""
+		},
+		"ls_adls_onetwentyuserdl_properties_typeProperties_url": {
+			"value": "https://onetwentyuserdl.dfs.core.windows.net/"
+		},
+		"ls_http_onetwentyuser_properties_typeProperties_url": {
+			"value": "https://app-fake-data-api.azurewebsites.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
