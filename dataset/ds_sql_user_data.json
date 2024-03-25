@@ -12,6 +12,11 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
+				"name": "user_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
 				"name": "email",
 				"type": "nvarchar"
 			},
@@ -25,11 +30,12 @@
 			},
 			{
 				"name": "signup_date",
-				"type": "date"
+				"type": "nvarchar"
 			},
 			{
 				"name": "signup_month",
-				"type": "nvarchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "signup_year",
