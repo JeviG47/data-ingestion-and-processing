@@ -36,12 +36,6 @@
 					"name": "DateTransformation"
 				},
 				{
-					"name": "derivedColumn1"
-				},
-				{
-					"name": "derivedColumn2"
-				},
-				{
 					"name": "select2"
 				}
 			],
@@ -60,10 +54,9 @@
 				"          last_name = split(name, ' ')[2]) ~> Name",
 				"Name split(regexMatch(email,`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`),",
 				"     disjoint: false) ~> split1@(validEmail, InvalidEmail)",
-				"derivedColumn1 derive(signup_month = month(signup_date_transformed)) ~> DateTransformation",
-				"split1@validEmail derive(signup_date_transformed = toDate(signup_date, 'dd-MM-yyyy')) ~> derivedColumn1",
-				"DateTransformation derive(signup_year = year(signup_date_transformed)) ~> derivedColumn2",
-				"derivedColumn2 select(mapColumn(",
+				"split1@validEmail derive(signup_month = split(signup_date, '-')[2],",
+				"          signup_year = split(signup_date, '-')[3]) ~> DateTransformation",
+				"DateTransformation select(mapColumn(",
 				"          first_name,",
 				"          last_name,",
 				"          email,",
