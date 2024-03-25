@@ -9,7 +9,7 @@
 						"referenceName": "ds_raw_api_user_data",
 						"type": "DatasetReference"
 					},
-					"name": "FirstNameSource"
+					"name": "Source"
 				}
 			],
 			"sinks": [
@@ -52,7 +52,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine',",
-				"     partitionBy('hash', 1)) ~> FirstNameSource",
+				"     partitionBy('hash', 1)) ~> Source",
 				"IntereststoString derive(first_name = split(name, ' ')[1],",
 				"          last_name = split(name, ' ')[2]) ~> Name",
 				"Name split(regexMatch(email,`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`),",
@@ -70,7 +70,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> Select",
-				"FirstNameSource derive(interests = replace(replace(replace(toString(interests), '[', ''), ']', ''), '\"', '')) ~> IntereststoString",
+				"Source derive(interests = replace(replace(replace(toString(interests), '[', ''), ']', ''), '\"', '')) ~> IntereststoString",
 				"split1@validEmail derive(signup_date_transformed = toString(signup_date)) ~> Date",
 				"Select sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
