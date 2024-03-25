@@ -39,10 +39,15 @@
 						"type": "TabularTranslator",
 						"mappings": [
 							{
+								"source": {
+									"name": "email",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
-									"name": "id",
-									"type": "Int32",
-									"physicalType": "int"
+									"name": "email",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -65,18 +70,6 @@
 								},
 								"sink": {
 									"name": "last_name",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "email",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "email",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -91,6 +84,26 @@
 									"name": "signup_date",
 									"type": "DateTime",
 									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "signup_month"
+								},
+								"sink": {
+									"name": "signup_month",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "signup_year"
+								},
+								"sink": {
+									"name": "signup_year",
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							},
 							{

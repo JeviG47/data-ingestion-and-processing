@@ -12,21 +12,29 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "id",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "name",
+				"name": "email",
 				"type": "nvarchar"
 			},
 			{
-				"name": "email",
+				"name": "first_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "last_name",
 				"type": "nvarchar"
 			},
 			{
 				"name": "signup_date",
 				"type": "date"
+			},
+			{
+				"name": "signup_month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "signup_year",
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "interests",
