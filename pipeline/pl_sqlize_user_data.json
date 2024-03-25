@@ -30,7 +30,10 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": "TRUNCATE TABLE Users",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true
+						},
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
 					},
