@@ -36,7 +36,7 @@
 					"name": "DateTransformation"
 				},
 				{
-					"name": "select2"
+					"name": "SelectColumns"
 				}
 			],
 			"scriptLines": [
@@ -60,14 +60,14 @@
 				"          first_name,",
 				"          last_name,",
 				"          email,",
-				"          signup_date_transformed,",
+				"          signup_date,",
 				"          signup_month,",
 				"          signup_year,",
 				"          interests",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectColumns",
+				"SelectColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['processed_user_data'],",
 				"     umask: 0022,",
