@@ -63,7 +63,7 @@
 				"          first_name,",
 				"          last_name,",
 				"          email,",
-				"          signup_date,",
+				"          signup_date = signup_date_transformed,",
 				"          signup_month,",
 				"          signup_year,",
 				"          interests",
