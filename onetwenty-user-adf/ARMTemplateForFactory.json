@@ -1307,13 +1307,13 @@
 							"name": "DateTransformation"
 						},
 						{
-							"name": "Year"
-						},
-						{
 							"name": "select1"
 						},
 						{
 							"name": "IntereststoString"
+						},
+						{
+							"name": "derivedColumn1"
 						}
 					],
 					"scriptLines": [
@@ -1332,13 +1332,13 @@
 						"          last_name = split(name, ' ')[2]) ~> Name",
 						"Name split(regexMatch(email,`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`),",
 						"     disjoint: false) ~> split1@(validEmail, InvalidEmail)",
-						"split1@validEmail derive(signup_month = month(signup_date)) ~> DateTransformation",
-						"DateTransformation derive(signup_year = year(signup_date)) ~> Year",
-						"Year select(mapColumn(",
+						"derivedColumn1 derive(signup_month = split(signup_date_transformed, '-')[2],",
+						"          signup_year = split(signup_date_transformed, '-')[1]) ~> DateTransformation",
+						"DateTransformation select(mapColumn(",
 						"          first_name,",
 						"          last_name,",
 						"          email,",
-						"          signup_date,",
+						"          signup_date = signup_date_transformed,",
 						"          signup_month,",
 						"          signup_year,",
 						"          interests",
@@ -1346,6 +1346,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select1",
 						"FirstNameSource derive(interests = replace(replace(replace(toString(interests), '[', ''), ']', ''), '\"', '')) ~> IntereststoString",
+						"split1@validEmail derive(signup_date_transformed = toString(signup_date)) ~> derivedColumn1",
 						"select1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     partitionFileNames:['processed_user_data'],",
