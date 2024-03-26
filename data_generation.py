@@ -7,9 +7,9 @@ import os
 import json
 from azure.storage.blob import BlobServiceClient
 
-storage_account_key = "Noy+yooKqRtXDja25c7CZEbOX+URW2PbQXfjust/CpvCmPiTRDh9pYyH2xWSoGZKgvyL5dXPzmu++AStlQYNJg=="
+storage_account_key = "OtvThgUDQgsZKL0qxXw1rp/u5EsNWVKVsr+Ll4BQe/h7RmhfV2iYCmus+jUw7EQrGdSDwl0G5gif+AStkaVs4Q=="
 storage_account_name = "onetwentyusersa"
-connection_string = "DefaultEndpointsProtocol=https;AccountName=fakedatacsv;AccountKey=Noy+yooKqRtXDja25c7CZEbOX+URW2PbQXfjust/CpvCmPiTRDh9pYyH2xWSoGZKgvyL5dXPzmu++AStlQYNJg==;EndpointSuffix=core.windows.net"
+connection_string = "DefaultEndpointsProtocol=https;AccountName=onetwentyusersa;AccountKey=OtvThgUDQgsZKL0qxXw1rp/u5EsNWVKVsr+Ll4BQe/h7RmhfV2iYCmus+jUw7EQrGdSDwl0G5gif+AStkaVs4Q==;EndpointSuffix=core.windows.net"
 container_name = "user"
 
 # Function to generate random name
