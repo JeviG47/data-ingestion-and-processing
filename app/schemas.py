@@ -8,7 +8,7 @@ class UserBase(BaseModel):
     signup_date: str
     signup_month: int
     signup_year: int
-    interests: List[str]
+    interests: str
 
 class UserCreate(UserBase):
     pass
@@ -20,10 +20,10 @@ class UserUpdate(BaseModel):
     signup_date: Optional[str] = None
     signup_month: Optional[int] = None
     signup_year: Optional[int] = None
-    interests: Optional[List[str]] = None
+    interests: Optional[str] = None
 
 class User(UserBase):
-    id: int
+    email: str
 
     class Config:
         orm_mode = True

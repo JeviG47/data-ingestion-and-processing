@@ -2,8 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import crud, schemas
 from app.database import SessionLocal
+from fastapi import FastAPI
 
-router = APIRouter()
+from fastapi import FastAPI
+
+app = FastAPI()
 
 # Dependency to get the database session
 def get_db():
@@ -14,7 +17,7 @@ def get_db():
         db.close()
 
 # Create User
-@router.post("/users/", response_model=schemas.User)
+@app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, email=user.email)
     if db_user:
@@ -22,7 +25,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 # Get User by Email
-@router.get("/users/{email}", response_model=schemas.User)
+@app.get("/users/{email}", response_model=schemas.User)
 def read_user(email: str, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, email=email)
     if db_user is None:
@@ -30,7 +33,7 @@ def read_user(email: str, db: Session = Depends(get_db)):
     return db_user
 
 # Update User by Email
-@router.put("/users/{email}", response_model=schemas.User)
+@app.put("/users/{email}", response_model=schemas.User)
 def update_user(email: str, user: schemas.UserUpdate, db: Session = Depends(get_db)):
     db_user = crud.update_user(db=db, email=email, user_data=user)
     if db_user is None:
@@ -38,7 +41,7 @@ def update_user(email: str, user: schemas.UserUpdate, db: Session = Depends(get_
     return db_user
 
 # Delete User by Email
-@router.delete("/users/{email}")
+@app.delete("/users/{email}")
 def delete_user(email: str, db: Session = Depends(get_db)):
     db_user = crud.delete_user(db, email=email)
     if db_user is None:
@@ -46,7 +49,7 @@ def delete_user(email: str, db: Session = Depends(get_db)):
     return {"message": "User deleted successfully"}
 
 # Fetch users who signed up in the last month and have a specific interest
-@router.get("/users/last-month-with-interest/")
+@app.get("/users/last-month-with-interest/")
 def get_users_last_month_with_interest(interest: str, db: Session = Depends(get_db)):
     query = """
         SELECT *
@@ -60,4 +63,3 @@ def get_users_last_month_with_interest(interest: str, db: Session = Depends(get_
     if not users:
         raise HTTPException(status_code=404, detail="No users found")
     return users
-

@@ -1,26 +1,19 @@
-import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Define your connection parameters
+DATABASE_URL = "mssql+pyodbc://adm:Waterford120@onetwenty-user-srv.database.windows.net:1433/user-db?driver=ODBC+Driver+17+for+SQL+Server"
 
-# Retrieve database configuration from environment variables
-db_server = os.getenv("DB_SERVER")
-db_name = os.getenv("DB_NAME")
-db_username = os.getenv("DB_USERNAME")
-db_password = os.getenv("DB_PASSWORD")
+# Create the engine
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"ssl": "require"},
+    echo=True  # Set to True to see SQL queries being executed
+)
 
-# Define the connection string
-SQLALCHEMY_DATABASE_URL = f"mssql+pyodbc://{db_username}:{db_password}@{db_server}.database.windows.net/{db_name}?driver=ODBC+Driver+17+for+SQL+Server"
-
-# Create database engine
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-
-# Create a sessionmaker to create database sessions
+# Create a session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Create a base class for declarative models
+# Declare a base for declarative class definitions
 Base = declarative_base()
